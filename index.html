@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #121212;
+        margin: 0;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+    }
+
+    .calculator {
+        background-color: #1e1eec  , e1e;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        width: 300px;
+    }
+
+    #display {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 24px;
+        text-align: right;
+        border: none;
+        border-radius: 5px;
+        background-color: #2c2c2c;
+        color: #ffffff;
+    }
+
+    input[type="button"] {
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        font-size: 18px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3c3c3c;
+        color: #ffffff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    input[type="button"]:hover {
+        background-color: #5c5c5c;
+    }
+
+    input[type="button"].num {
+        background-color: #2c2c2c;
+    }
+
+    input[type="button"].num:hover {
+        background-color: #4c4c4c;
+    }
+
+    input[type="button"][value="="] {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    input[type="button"][value="="]:hover {
+        background-color: #45a049;
+    }
+
+    input[type="button"][value="C"] {
+        background-color: #f44336;
+        color: white;
+    }
+
+    input[type="button"][value="C"]:hover {
+        background-color: #e53935;
+    }
+
+    input[type="button"][value="L"],
+    input[type="button"][value="T"],
+    input[type="button"][value="P"] {
+        background-color: #2196f3;
+        color: white;
+    }
+
+    input[type="button"][value="L"]:hover,
+    input[type="button"][value="T"]:hover,
+    input[type="button"][value="P"]:hover {
+        background-color: #1e88e5;
+    }
+  
+  
+  
+  
+  #helpBtn {
+    position: absolute;
+    top:0;
+    left: 0;
+    background-color: #007bff; /* Blue background */
+    border: none;              /* Remove default border */
+    color: white;              /* White text */
+    padding: 10px 20px;        /* Some padding */
+    text-align: center;        /* Center the text */
+    text-decoration: none;     /* Remove underline */
+    display: inline-block;     /* Make the link block level */
+    font-size: 16px;           /* Increase font size */
+    border-radius: 5px;        /* Rounded corners */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+    cursor: pointer;           /* Pointer cursor on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Slight shadow */
+ 
+  font-weight: bold
+}
+
+#helpBtn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly larger shadow */
+}
+
+#helpBtn:active {
+    background-color: #004085; /* Even darker blue when active */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow when pressed */
+    transform: translateY(2px); /* Slightly move button down when clicked */
+}
+  
+  
+  #closeBtn {
+	background: rgb(250, 150, 150);
+}
+  
+     .modal {
+
+            display: none;
+
+            position: fixed;
+
+            z-index: 1;
+
+            left: 0;
+
+            top: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            overflow: auto;
+
+            background-color: rgba(0,0,0,0.4);
+
+            padding-top: 60px;
+
+        }
+    .modal-content {
+
+            background-color: #fefefe;
+
+            margin: 5% auto;
+
+            padding: 20px;
+
+            border: 1px solid #888;
+
+            width: 80%;
+
+        }
+  
+     .close {
+
+            color: #aaa;
+
+            float: right;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+        }
+
+        .close:hover,
+
+        .close:focus {
+
+            color: black;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+        }
+
+  
+  .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #666;
+        }
+        p {
+            color: #444;
+        }
+  
+  .calculator > h1 {
+    color: white;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <button id="helpBtn">?</button>
+  <div id="myModal" class="modal">
+     <span class="close">&times;</span>
+    <div class="modal-content">
+      <div class="container">
+        <h1>Learning and Teachable Calculator (LTC)</h1>
+        <p>The Learning and Teachable Calculator (LTC) is an innovative app that demonstrates how computers can learn from feedback and experience. The interface of the app is designed to be simple and intuitive, featuring basic calculator buttons along with special learning functionalities.</p>
+        
+        <h2>Key Features:</h2>
+        <p><strong>1. Random Evaluation:</strong><br>
+        When a user inputs an expression such as <em>x + y</em>, the app initially evaluates the expression to a random value. This showcases the starting point before any learning has taken place.</p>
+        
+        <p><strong>2. Learn Button (L):</strong><br>
+        By clicking the "L" (Learn) button, the app remembers the value it initially assigned to the expression. Whenever the same expression is given in the future, the app will evaluate it to this remembered value. This feature highlights the app's ability to remember and recall previous calculations.</p>
+        
+        <p><strong>3. Teach Button (T):</strong><br>
+        The "T" (Teach) button allows the user to provide the correct value of the expression. Once the user inputs the value and teaches the calculator, the app will evaluate the same expression to this taught value in the future. This feature demonstrates how the app can learn and improve its accuracy based on user feedback.</p>
+        
+        <h2>Purpose and Motivation:</h2>
+        <p>The primary aim of the Learning and Teachable Calculator is to illustrate the fundamental concepts of machine learning. It shows how a machine can start with no knowledge, learn from its own outputs, and improve through user feedback. This app serves as a simple yet powerful demonstration of the learning process that is central to artificial intelligence and machine learning technologies.</p>
+        
+        <p>By interacting with the LTC, users can gain a better understanding of how computers can adapt and improve their performance over time, reflecting the principles of learning from experience and feedback.</p>
+    </div>
+    </div>
+  </div>
+
+<div class="calculator">
+   <h1>LTC</h1>
+    <input type="text" id="display" disabled>
+    <br>
+    <input type="button" class="num" value="7" onclick="addToDisplay('7')">
+    <input type="button" class="num" value="8" onclick="addToDisplay('8')">
+    <input type="button" class="num" value="9" onclick="addToDisplay('9')">
+    <input type="button" class="num" value="4" onclick="addToDisplay('4')">
+    <input type="button" class="num" value="5" onclick="addToDisplay('5')">
+    <input type="button" class="num" value="6" onclick="addToDisplay('6')">
+    <input type="button" class="num" value="1" onclick="addToDisplay('1')">
+    <input type="button" class="num" value="2" onclick="addToDisplay('2')">
+    <input type="button" class="num" value="3" onclick="addToDisplay('3')">
+    <input type="button" class="num" value="0" onclick="addToDisplay('0')">
+    <input type="button" value="=" onclick="calculate()">
+    <input type="button" value="+" onclick="addToDisplay('+')">
+    <input type="button" value="C" onclick="clearDisplay()">
+    <input type="button" value="L" id="learn" onclick="learn()">
+    <input type="button" value="T" id="teach" onclick="teach()">
+    <input type="button" value="P" id="punish" onclick="punish()">
+</div>
+
+<script>
+  var term1 = "";
+  var term2 = "";
+  var operator = "";
+  var solution = "";
+  let state = ()=>{
+    return term1 + operator + term2;
+  }
+  const  learnedSolutions = {};
+  const mistakenSolutions = {};
+    function addToDisplay(value) {
+      if (value==="+"){
+         if ((!!term1) && (!term2)){
+           operator= value; 
+         }
+      } else if (!term1){
+        term1=value;
+      } else if (!term2 && (true == !!operator)){
+        term2 = value;
+      } else return;
+      
+      document.getElementById('display').value = term1 + operator + term2;
+    }
+  
+   
+
+    function clearDisplay() {
+        term1 = "";
+        term2 = "";
+        operator = "";
+        document.getElementById('display').value = '';
+    }
+
+    function calculate() {
+          if (state().length < 3) return;
+        let display = document.getElementById('display');
+        if (display.value){
+            try {
+              display.value = term1 + operator + term2 + " = " + solve(term1, term2, operator);
+            } catch(err) {
+                display.value = 'Error';
+            }
+        }
+    }
+  
+  function solve(term1, term2, operator){
+   // solution = "unknown";
+    if (state() in learnedSolutions){
+      return learnedSolutions[state()];
+    } else {
+      solution = Math.floor(Math.random() * 9); // Generates random number b/w 0 and 9
+      solution = solution + "" + Math.floor(Math.random() * 9); // another random concatenated to the first
+    }
+    if ((state() in mistakenSolutions)){
+        if (mistakenSolutions[state()].includes(solution)){
+       solve(term1, term2, operator);
+        } 
+    } else {
+      mistakenSolutions[state()] = [];
+    }
+    return solution;
+      
+  
+
+  }
+  
+  function learn(){
+    learnedSolutions[state()] = solution;
+    
+  }
+  
+  function teach(){
+    let knowledge = prompt(state() + " = ");
+    learnedSolutions[state()] = knowledge;
+    solution = knowledge;
+    calculate();
+  }
+  
+  function punish(){
+    mistakenSolutions[state()].push(solution);
+   // p.innerHTML += " — " + solution;
+   
+  }
+  
+  
+  
+  
+  
+  
+  // Get modal element
+    var modal = document.getElementById("myModal");
+
+    // Get open modal button
+   // var openModalBtn = document.getElementById("openModalBtn");
+
+    // Get close button
+    var closeBtn = document.getElementsByClassName("close")[0];
+
+    // Listen for open click
+    helpBtn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Listen for close click
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Listen for outside click
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+ 
+</script>
+
+</body>
+</html>
