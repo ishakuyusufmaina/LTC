@@ -18,3 +18,4 @@ The primary aim of the Learning and Teachable Calculator is to illustrate the fu
 By interacting with the LTC, users can gain a better understanding of how computers can adapt and improve their performance over time, reflecting the principles of learning from experience and feedback.
 
              
+[LTC] (https://ishakuyusufmaina.github.io/LTC/)
